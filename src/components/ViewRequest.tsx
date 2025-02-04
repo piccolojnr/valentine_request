@@ -279,18 +279,52 @@ export default function ValentineView() {
   return (
     <>
       <Helmet>
-        <title>{request.sender_name} sent you a love letter</title>
+        <title>{`${request.sender_name} sent you a love letter`}</title>
         <meta
           name="description"
-          content={`A love letter from ${request.sender_name} to ${request.recipient_name}`}
+          content={`A personalized love letter from ${request.sender_name} to ${request.recipient_name}. Experience an interactive Valentine request with heartfelt messages, charming virtual gifts, and enchanting design.`}
         />
-        <meta property="og:title" content="A love letter for you" />
+        <meta
+          property="og:title"
+          content={`${request.sender_name} sent you a love letter`}
+        />
         <meta
           property="og:description"
-          content={`A love letter from ${request.sender_name} to ${request.recipient_name}`}
+          content={`A beautiful message from ${request.sender_name} to ${request.recipient_name}.`}
         />
         <meta property="og:image" content={theme.image} />
         <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={`${request.sender_name} sent you a love letter`}
+        />
+        <meta
+          name="twitter:description"
+          content={`A heartfelt note from ${request.sender_name} to ${request.recipient_name}.`}
+        />
+        <meta name="twitter:image" content={theme.image} />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="keywords"
+          content="Valentine Request, Love Letter, Romance, Interactive Experience, Virtual Gift, Personalized Message"
+        />
+
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "${request.sender_name} sent you a love letter",
+              "description": "Experience a personalized Valentine request with a captivating love letter, virtual gifts, and enchanting design.",
+              "url": "${window.location.href}",
+              "image": "${theme.image}"
+            }
+          `}
+        </script>
       </Helmet>
       <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-rose-50 via-pink-50 to-rose-100">
         <FloatingHearts />
