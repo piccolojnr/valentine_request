@@ -27,13 +27,16 @@ export default function RequestStatus() {
       try {
         const { data, error } = await supabase
           .from("valentine_requests")
-          .select("id, recipient_name, sender_name, accepted, created_at, updated_at")
+          .select(
+            "id, recipient_name, sender_name, accepted, created_at, updated_at"
+          )
           .eq("id", id)
           .single();
 
         if (error) throw error;
         setRequest(data);
       } catch (err) {
+        console.error(err);
         toast({
           title: "Error",
           description: "Could not load request status",
@@ -48,20 +51,25 @@ export default function RequestStatus() {
 
     // Set up real-time subscription
     const subscription = supabase
-      .channel('request_status')
-      .on('postgres_changes', {
-        event: 'UPDATE',
-        schema: 'public',
-        table: 'valentine_requests',
-        filter: `id=eq.${id}`
-      }, (payload) => {
-        setRequest(payload.new as Request);
-      })
+      .channel("request_status")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "valentine_requests",
+          filter: `id=eq.${id}`,
+        },
+        (payload) => {
+          setRequest(payload.new as Request);
+        }
+      )
       .subscribe();
 
     return () => {
       subscription.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {
@@ -83,7 +91,9 @@ export default function RequestStatus() {
         <Card className="w-full max-w-md">
           <CardContent className="p-6 text-center">
             <XCircle className="w-12 h-12 text-rose-400 mx-auto mb-4" />
-            <h2 className="text-xl font-serif text-gray-800">Request not found</h2>
+            <h2 className="text-xl font-serif text-gray-800">
+              Request not found
+            </h2>
           </CardContent>
         </Card>
       </div>
@@ -111,20 +121,26 @@ export default function RequestStatus() {
                 <Clock className="w-16 h-16 text-rose-400 mx-auto" />
               )}
             </motion.div>
-            
+
             <h3 className="mt-4 text-xl font-medium text-gray-800">
-              {request.accepted ? "Love Accepted! 💝" : "Awaiting Response... 💌"}
+              {request.accepted
+                ? "Love Accepted! 💝"
+                : "Awaiting Response... 💌"}
             </h3>
           </div>
 
           <div className="space-y-3 bg-rose-50/50 rounded-lg p-4 border border-rose-100">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">From:</span>
-              <span className="font-medium text-gray-800">{request.sender_name}</span>
+              <span className="font-medium text-gray-800">
+                {request.sender_name}
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">To:</span>
-              <span className="font-medium text-gray-800">{request.recipient_name}</span>
+              <span className="font-medium text-gray-800">
+                {request.recipient_name}
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Sent:</span>
@@ -154,7 +170,7 @@ export default function RequestStatus() {
 
           <Button
             className="w-full bg-rose-500 hover:bg-rose-600 text-white transition-all duration-300"
-            onClick={() => window.location.href = `/view/${request.id}`}
+            onClick={() => (window.location.href = `/view/${request.id}`)}
           >
             View Request
           </Button>
@@ -162,4 +178,4 @@ export default function RequestStatus() {
       </Card>
     </div>
   );
-} 
+}

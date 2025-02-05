@@ -15,3 +15,11 @@ export interface Theme {
   gradient: string;
   image: string;
 }
+
+export interface SocialPlatform {
+  name: string;
+  icon: string;
+  color: string;
+  hoverColor: string;
+  shareUrl: string;
+}

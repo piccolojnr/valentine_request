@@ -22,6 +22,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { MUSIC_LIBRARY, THEMES } from "@/lib/themes";
 import { Helmet } from "react-helmet";
+import { ShareLove } from "./SocialShare";
+import { getSocialPlatforms } from "@/lib/utils";
+import { SocialPlatform } from "@/types";
 
 const REJECTION_MESSAGES = [
   {
@@ -118,6 +121,7 @@ export default function ValentineView() {
   const { toast } = useToast();
   const [rejectionIndex, setRejectionIndex] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
+  const shareUrl = `${window.location.origin}/view/${id}`;
 
   useEffect(() => {
     async function fetchRequest() {
@@ -177,23 +181,6 @@ export default function ValentineView() {
     setVolume(newVolume);
     if (soundRef.current) {
       soundRef.current.volume(newVolume);
-    }
-  };
-
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: "Link Copied!",
-        description: "Share this valentine with your loved ones!",
-      });
-    } catch (error: any) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to copy link.",
-        variant: "destructive",
-      });
     }
   };
 
@@ -270,6 +257,12 @@ export default function ValentineView() {
   useEffect(() => {
     setModalVisible(true);
   }, []);
+
+  const socialPlatforms: SocialPlatform[] = getSocialPlatforms(
+    request,
+    shareUrl,
+    "brag"
+  );
 
   if (loading) return <LoadingView />;
   if (error || !request) return <ErrorView error={error} />;
@@ -362,13 +355,18 @@ export default function ValentineView() {
                     <Play className="text-white/90" />
                   )}
                 </Button>
-                <Button
-                  size="icon"
-                  className="bg-white/30 hover:bg-white/40 backdrop-blur-md transition-all duration-300"
-                  onClick={handleShare}
-                >
-                  <Share2 className="text-white/90" />
-                </Button>
+
+                <ShareLove
+                  socialPlatforms={socialPlatforms}
+                  trigger={
+                    <Button
+                      size="icon"
+                      className="bg-white/30 hover:bg-white/40 backdrop-blur-md transition-all duration-300"
+                    >
+                      <Share2 className="text-white/90" />
+                    </Button>
+                  }
+                />
               </div>
             </motion.div>
 

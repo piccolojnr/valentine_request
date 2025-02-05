@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Share2, Plus, Eye, Heart } from "lucide-react";
+import { Clock, Share2, Plus, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
-import confetti from "canvas-confetti";
 
 const NAV_ITEMS = [
   {
@@ -115,109 +114,6 @@ const FloatingNav = () => {
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
-  );
-};
-
-const CatchableHeart = () => {
-  const [caught, setCaught] = useState(false);
-  const [position, setPosition] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
-
-  // useEffect(() => {
-  //   const moveHeart = () => {
-  //     if (!caught) {
-  //       const padding = 100; // Keep heart away from edges
-  //       setPosition({
-  //         x: Math.random() * (window.innerWidth - 2 * padding) + padding,
-  //         y: Math.random() * (window.innerHeight - 2 * padding) + padding,
-  //       });
-  //     }
-  //   };
-
-  //   moveHeart(); // Initial position
-  //   const interval = setInterval(moveHeart, 2000);
-  //   return () => clearInterval(interval);
-  // }, [caught]);
-
-  const triggerConfetti = () => {
-    const count = 200;
-    const defaults = {
-      origin: { y: 0.7 },
-      colors: ["#FDA4AF", "#FB7185", "#E11D48"],
-    };
-
-    confetti({
-      ...defaults,
-      particleCount: count,
-      spread: 100,
-    });
-    confetti({
-      ...defaults,
-      particleCount: count,
-      spread: 100,
-      angle: 60,
-    });
-    confetti({
-      ...defaults,
-      particleCount: count,
-      spread: 100,
-      angle: 120,
-    });
-  };
-
-  return (
-    <motion.div
-      drag={!caught}
-      dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      whileDrag={{ scale: 1.2 }}
-      animate={{
-        x: position.x,
-        y: position.y,
-        transition: {
-          type: "spring",
-          damping: 20,
-          stiffness: 100,
-        },
-      }}
-      whileHover={{ scale: 1.1 }}
-      onClick={() => {
-        if (!caught) {
-          setCaught(true);
-          triggerConfetti();
-        }
-      }}
-      className={cn(
-        "fixed cursor-pointer w-32 h-32 z-50 right-0 bottom-0",
-        "transition-colors duration-300",
-        caught ? "hover:scale-none cursor-default" : ""
-      )}
-    >
-      <motion.div
-        animate={
-          caught
-            ? {
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0],
-              }
-            : {}
-        }
-        transition={{
-          duration: 0.5,
-          repeat: caught ? Infinity : 0,
-          repeatType: "reverse",
-        }}
-      >
-        <Heart
-          className={cn(
-            "w-8 h-8",
-            "transition-all duration-300",
-            caught ? "text-yellow-500 fill-yellow-500" : "text-rose-500"
-          )}
-        />
-      </motion.div>
     </motion.div>
   );
 };

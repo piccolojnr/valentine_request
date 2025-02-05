@@ -7,7 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
@@ -105,6 +111,7 @@ export default function CreateValentineRequest() {
 
   const onSubmit = async (data: CreateRequestData) => {
     setIsSubmitting(true);
+    CreateRequestSchema.parse(data);
     try {
       const { data: insertedData, error } = await supabase
         .from("valentine_requests")
@@ -163,11 +170,8 @@ export default function CreateValentineRequest() {
               </CardTitle>
               <Progress value={(currentStep / 5) * 100} className="mt-2" />
             </CardHeader>
-            <CardContent className="p-4 h-[calc(100vh-16rem)]">
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="relative h-full overflow-y-auto p-2"
-              >
+            <CardContent className="p-4 h-[calc(100vh-16rem)] relative overflow-y-auto">
+              <form onSubmit={handleSubmit(onSubmit)} className=" h-full  p-2">
                 <AnimatePresence>
                   {currentStep === 1 && (
                     <motion.div
@@ -312,7 +316,7 @@ export default function CreateValentineRequest() {
                                         : "outline"
                                     }
                                     onClick={() => field.onChange(gift)}
-                                    className="w-full"
+                                    className="w-full text-left text-xs md:text-sm break-words"
                                   >
                                     {gift}
                                   </Button>
@@ -409,32 +413,37 @@ export default function CreateValentineRequest() {
                 </AnimatePresence>
 
                 {/* Navigation Buttons */}
-
-                <div className="flex justify-between mt-6 absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-                  {currentStep > 1 && (
-                    <Button type="button" variant="outline" onClick={prevStep}>
-                      Back
-                    </Button>
-                  )}
-                  {currentStep < 5 && (
-                    <Button
-                      type="button"
-                      onClick={nextStep}
-                      className="ml-auto bg-rose-500 hover:bg-rose-600 text-white transition-all duration-300 shadow-md hover:shadow-lg"
-                    >
-                      Next
-                    </Button>
-                  )}
-                  {currentStep === 5 && (
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="ml-auto bg-rose-500 hover:bg-rose-600 text-white transition-all duration-300 shadow-md hover:shadow-lg"
-                    >
-                      {isSubmitting ? "Creating..." : "Create Request"}
-                    </Button>
-                  )}
-                </div>
+                <CardFooter>
+                  <div className="flex justify-between mt-6  p-4 bg-white border-t border-gray-200 w-full bottom-0 left-0 right-0">
+                    {currentStep > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={prevStep}
+                      >
+                        Back
+                      </Button>
+                    )}
+                    {currentStep < 5 && (
+                      <Button
+                        type="button"
+                        onClick={nextStep}
+                        className="ml-auto bg-rose-500 hover:bg-rose-600 text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                      >
+                        Next
+                      </Button>
+                    )}
+                    {currentStep === 5 && (
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="ml-auto bg-rose-500 hover:bg-rose-600 text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                      >
+                        {isSubmitting ? "Creating..." : "Create Request"}
+                      </Button>
+                    )}
+                  </div>
+                </CardFooter>
               </form>
             </CardContent>
           </Card>
@@ -521,7 +530,6 @@ const MusicSelector = ({
   musicLibrary,
 }: MusicSelectorProps) => {
   const soundRef = useRef<Howl | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [currentPlayingId, setCurrentPlayingId] = useState<string | null>(null);
 
   // Cleanup function for audio
@@ -540,7 +548,6 @@ const MusicSelector = ({
       soundRef.current.stop();
       soundRef.current.unload();
       if (currentPlayingId === musicId) {
-        setIsPlaying(false);
         setCurrentPlayingId(null);
         return;
       }
@@ -553,7 +560,6 @@ const MusicSelector = ({
         html5: true,
         volume: 0.5,
         onend: () => {
-          setIsPlaying(false);
           setCurrentPlayingId(null);
         },
         sprite: {
@@ -562,7 +568,6 @@ const MusicSelector = ({
       });
 
       soundRef.current.play("preview");
-      setIsPlaying(true);
       setCurrentPlayingId(musicId);
     }
   };
@@ -596,17 +601,17 @@ const MusicSelector = ({
               onChange(music.id);
               playMusic(music.id);
             }}
-            className="w-full flex justify-between items-center"
+            className="relative w-full flex flex-col h-auto md:flex-row justify-between items-start p-2"
           >
-            <span>
+            <span className="mb-2 md:mb-0">
               {music.emoji} {music.title}
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-auto">
               <span className="text-muted-foreground text-sm">
                 {music.artist}
               </span>
               {currentPlayingId === music.id && (
-                <div className="w-4 h-4 relative">
+                <div className="w-4 h-4 relative ">
                   <motion.div
                     className="absolute inset-0 border-2 border-current rounded-full"
                     animate={{ scale: [1, 1.2, 1] }}
@@ -618,6 +623,7 @@ const MusicSelector = ({
                   />
                 </div>
               )}
+
               {value === music.id && (
                 <span className="w-2 h-2 bg-current rounded-full" />
               )}
