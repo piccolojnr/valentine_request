@@ -28,36 +28,218 @@ import { SocialPlatform } from "@/types";
 
 const REJECTION_MESSAGES = [
   {
-    title: "Oh no!",
-    description: "Your heart is precious, but maybe not for me... 💝",
+    title: "Wait, what?!",
+    description: "Love just took emotional damage 💔",
   },
   {
-    title: "Sweet but...",
-    description: "I'll keep your love letter in my memory box 📦💌",
+    title: "Bruh...",
+    description: "Cupid just rage-quit. Thanks a lot. 😤",
   },
   {
-    title: "Gentle Pass",
-    description: "May your heart find its perfect match! ✨",
+    title: "404: Rejection Not Found",
+    description: "Love.exe has stopped responding. Restart required. 💕",
   },
   {
-    title: "Not Today",
-    description: "But you made my day brighter! 🌟",
+    title: "Denied!",
+    description: "Your application to avoid love has been rejected. 📝❌",
   },
   {
-    title: "Aww...",
-    description: "Your courage to ask was adorable though! 🎀",
+    title: "Think again...",
+    description: "Your heart has been flagged for suspicious activity. ❤️🚨",
   },
   {
-    title: "Sorry!",
-    description: "Let's keep our story in the friend chapter 📖💕",
+    title: "Whoa there!",
+    description: "You’re rejecting love? Is your WiFi okay? 📶❌",
   },
   {
-    title: "How sweet!",
-    description: "But my heart is dancing to a different tune 🎵",
+    title: "Rejection Overruled!",
+    description: "Love is persistent, like a pop-up ad you can't close. 😆",
   },
   {
-    title: "Oh my!",
-    description: "Your love letter was beautiful, but timing is everything 🕰️",
+    title: "Mission Failed!",
+    description: "We'll get 'em next time… or not. 😭💔",
+  },
+  {
+    title: "Error 502: Love Gateway Timeout",
+    description: "Love tried reaching you but got ghosted. 👻",
+  },
+  {
+    title: "Heart.exe crashed!",
+    description: "Reboot your emotions and try again. 🔄❤️",
+  },
+  {
+    title: "Nice try!",
+    description: "You can’t run from love. It's got GPS. 📍💘",
+  },
+  {
+    title: "Denied by the Universe",
+    description: "Even the stars are rooting for this one. 🌟✨",
+  },
+  {
+    title: "Oops...",
+    description:
+      "Your rejection has been declined due to lack of romance points. 😜",
+  },
+  {
+    title: "Why tho?",
+    description: "Even AI thinks this is a bad idea. 🤖💔",
+  },
+  {
+    title: "Yikes!",
+    description: "This rejection has been recorded for training purposes. 📼",
+  },
+  {
+    title: "L + Ratio",
+    description: "You just took an emotional L. 📉💀",
+  },
+  {
+    title: "Bruh moment",
+    description: "This one is going in my cringe compilation. 📸",
+  },
+  {
+    title: "Denied with Extreme Prejudice",
+    description: "The love gods are not happy with you. 😠💖",
+  },
+  {
+    title: "Love Jail 🚔",
+    description: "You’re under arrest for crimes against romance! 💘🔗",
+  },
+  {
+    title: "Rejection Rejected!",
+    description: "You just got rejected for rejecting love. 🔄❤️",
+  },
+  {
+    title: "Error 404: Love Not Found",
+    description: "Love tried reaching you but got a 404. 💔🚫",
+  },
+  {
+    title: "Denied!",
+    description: "You just got friend-zoned by love. 😬🚫",
+  },
+  {
+    title: "Love.exe has stopped working",
+    description: "Your heart has crashed. Please restart. 💔🔄",
+  },
+  {
+    title: "Nope!",
+    description: "Love just got ghosted by you. 👻💔",
+  },
+  {
+    title: "Rejected!",
+    description: "Your heart has been returned to sender. 📦🔄",
+  },
+  {
+    title: "Love Denied!",
+    description: "Your heart has been blocked by love. 🚫❤️",
+  },
+  {
+    title: "Error 403: Forbidden Love",
+    description: "Your heart has been banned from love. 🚫❤️",
+  },
+  {
+    title: "Rejected by Cupid",
+    description: "Cupid just swiped left on your heart. 💔👼",
+  },
+  {
+    title: "Rejection Rejected!",
+    description: "You just got rejected for rejecting love. 🔄❤️",
+  },
+  {
+    title: "Denied!",
+    description: "You just got friend-zoned by love. 😬🚫",
+  },
+  {
+    title: "Love.exe has stopped working",
+    description: "Your heart has crashed. Please restart. 💔🔄",
+  },
+  {
+    title: "Nope!",
+    description: "Love just got ghosted by you. 👻💔",
+  },
+  {
+    title: "Rejected!",
+    description: "Your heart has been returned to sender. 📦🔄",
+  },
+  {
+    title: "Love Denied!",
+    description: "Your heart has been blocked by love. 🚫❤️",
+  },
+  {
+    title: "Error 403: Forbidden Love",
+    description: "Your heart has been banned from love. 🚫❤️",
+  },
+  {
+    title: "Rejected by my Heart",
+
+    description: "Your heart has been returned to sender. 📦❤️",
+  },
+  {
+    title: "Love Denied!",
+    description: "Your heart has been blocked by love. 🚫❤️",
+  },
+  {
+    title: "Error 403: Forbidden Love",
+    description: "Your heart has been banned from love. 🚫❤️",
+  },
+  {
+    title: "Rejected by Cupid",
+    description: "Cupid just swiped left on your heart. 💔👼",
+  },
+  {
+    title: "Rejection Rejected!",
+    description: "You just got rejected for rejecting love. 🔄❤️",
+  },
+  {
+    title: "Denied!",
+    description: "You just got friend-zoned by love. 😬🚫",
+  },
+  {
+    title: "Love.exe has stopped working",
+    description: "Your heart has crashed. Please restart. 💔🔄",
+  },
+  {
+    title: "Nope!",
+    description: "Love just got ghosted by you. 👻💔",
+  },
+  {
+    title: "Rejected!",
+    description: "Your heart has been returned to sender. 📦🔄",
+  },
+  {
+    title: "Love Denied!",
+    description: "Your heart has been blocked by love. 🚫❤️",
+  },
+  {
+    title: "Error 403: Forbidden Love",
+    description: "Your heart has been banned from love. 🚫❤️",
+  },
+  {
+    title: "Rejected by Cupid",
+    description: "Cupid just swiped left on your heart. 💔👼",
+  },
+  {
+    title: "Rejection Rejected!",
+    description: "You just got rejected for rejecting love. 🔄❤️",
+  },
+  {
+    title: "Denied!",
+    description: "You just got friend-zoned by love. 😬🚫",
+  },
+  {
+    title: "Love.exe has stopped working",
+    description: "Your heart has crashed. Please restart. 💔🔄",
+  },
+  {
+    title: "Nope!",
+    description: "Love just got ghosted by you. 👻💔",
+  },
+  {
+    title: "Rejected!",
+    description: "Your heart has been returned to sender. 📦🔄",
+  },
+  {
+    title: "Love Denied!",
+    description: "Your heart has been blocked by love. 🚫❤️",
   },
 ];
 
@@ -217,6 +399,7 @@ export default function ValentineView() {
       description: message.description,
       variant: "destructive",
       className: "bg-white border-rose-200 text-gray-800",
+      duration: 10000,
     });
   };
 
@@ -487,9 +670,6 @@ export default function ValentineView() {
                                 transition={{ duration: 0.3 }}
                               />
                             </span>
-                          </span>
-                          <span className="absolute top-1 right-2 text-xs text-rose-400/50">
-                            {rejectionIndex + 1}/{REJECTION_MESSAGES.length}
                           </span>
                         </Button>
                       </motion.div>
